@@ -1,6 +1,6 @@
 FROM jenkinsci/jenkins:latest
 
-RUN /usr/local/bin/install-plugins.sh nexus-jenkins-plugin docker-workflow email-ext build-pipeline-plugin git-parameter github-oauth nexus-artifact-uploader workflow-aggregator sonar ssh credentials-binding
+RUN /usr/local/bin/install-plugins.sh pipeline-maven nexus-jenkins-plugin docker-workflow email-ext build-pipeline-plugin git-parameter github-oauth nexus-artifact-uploader workflow-aggregator sonar ssh credentials-binding
 
 
 ENV JENKINS_USER admin
