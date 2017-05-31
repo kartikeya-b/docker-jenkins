@@ -3,6 +3,9 @@ FROM jenkinsci/jenkins:latest
 RUN /usr/local/bin/install-plugins.sh docker-plugin pipeline-maven nexus-jenkins-plugin docker-workflow email-ext build-pipeline-plugin git-parameter github-oauth nexus-artifact-uploader workflow-aggregator sonar ssh credentials-binding
 RUN rm -rf /var/jenkins_home/config.xml
 ADD config.xml /var/jenkins_home
+RUN rm -rf /var/jenkins_home/credentials.xml
+ADD credentials.xml /var/jenkins_home
+
 
 
 ENV JENKINS_USER admin
