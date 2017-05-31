@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.12">
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers/>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.33">
+    <script>
+node(&apos;mjs&apos;)
+{
+    stage(&apos;Git Clone&apos;)
+	   {
+		try {
+            sh &apos;git clone https://github.com/kartikeya-b/maven-sonar.git&apos;
+            //sh &apos;git clone https://github.com/kartikeya-b/maven-sonar.git&apos;
+			sh &quot;ls -al;export M2_REPO=/home/jenkins/.m2;cd maven-sonar;mvn clean install&quot;
+			currentBuild.result = &apos;SUCCESS&apos;
+			}
+		catch (e)
+			{
+			currentBuild.result = &apos;FAILURE&apos;
+			throw e
+			}
+		}
+		
+	stage(&apos;SonarQube analysis&apos;) 
+		{
+		try {
+          sh &quot;cd maven-sonar;mvn sonar:sonar -Dsonar.projectKey=org.sonarqube:java-simple-sq-scanner -Dsonar.projectName=Java -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectVersion=1.0 -Dsonar.language=java -Dsonar.host.url=http://10.150.19.24:9056&quot;
+		  currentBuild.result = &apos;SUCCESS&apos;
+         }
+		catch (e)
+			{
+			currentBuild.result = &apos;FAILURE&apos;
+			throw e
+			}
+		}
+
+    stage(&apos;War Upload&apos;)
+		{
+		try {		
+			echo &quot;this is WarUpload&quot;
+			sh &quot;cd maven-sonar;curl -u admin:admin123 -X PUT http://10.150.19.24:9003/nexus/content/repositories/releases/sm-shop-2.0.5.war -T target/example-java-maven-1.0-SNAPSHOT.jar&quot;
+		    currentBuild.result = &apos;SUCCESS&apos;
+			}
+		catch (e)
+			{
+			currentBuild.result = &apos;FAILURE&apos;
+			throw e
+			}		
+		}
+}
+    	   
+node(&apos;master&apos;)
+{
+    stage(&apos;Containeration&apos;)
+		{
+		try {		
+			echo &quot;this is ContainerCreation and register&quot;
+			sh &quot;cd maven-sonar;chmod 777 docker_build.sh;./docker_build.sh 2.0.5 &gt; outFile&quot;
+			curData = readFile &apos;outFile&apos;
+			echo &quot;The output is ${curData}&quot;
+			currentBuild.result = &apos;SUCCESS&apos;
+			}
+		catch (e)
+			{
+			currentBuild.result = &apos;FAILURE&apos;
+			throw e
+			}			
+		}
+	   stage(&apos;Deployment&apos;)
+		{
+		try {		
+			echo &quot;This is deployment&quot;
+			sh &quot;cd maven-sonar;curl -X PUT http://10.150.19.24:9059 -T target/example-java-maven-1.0-SNAPSHOT.jar&quot;
+			currentBuild.result = &apos;SUCCESS&apos;
+			}
+		catch (e)
+			{
+			currentBuild.result = &apos;FAILURE&apos;
+			throw e
+			}			
+		}	
+}
+    </script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
