@@ -29,7 +29,7 @@ node(&apos;mjs&apos;)
 	stage(&apos;SonarQube analysis&apos;) 
 		{
 		try {
-          sh &quot;cd maven-sonar;mvn sonar:sonar -Dsonar.projectKey=org.sonarqube:java-simple-sq-scanner -Dsonar.projectName=Java -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectVersion=1.0 -Dsonar.language=java -Dsonar.host.url=http://10.150.19.24:9056&quot;
+          sh &quot;cd maven-sonar;mvn sonar:sonar -Dsonar.projectKey=org.sonarqube:java-simple-sq-scanner -Dsonar.projectName=Java -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectVersion=1.0 -Dsonar.language=java -Dsonar.host.url=http://172.16.3.2:9056&quot;
 		  currentBuild.result = &apos;SUCCESS&apos;
          }
 		catch (e)
@@ -43,7 +43,7 @@ node(&apos;mjs&apos;)
 		{
 		try {		
 			echo &quot;this is WarUpload&quot;
-			sh &quot;cd maven-sonar;curl -u admin:admin123 -X PUT http://10.150.19.24:9003/nexus/content/repositories/releases/sm-shop-2.0.5.war -T target/example-java-maven-1.0-SNAPSHOT.jar&quot;
+			sh &quot;cd maven-sonar;curl -u admin:admin123 -X PUT http://:9003/nexus/content/repositories/releases/sm-shop-2.0.5.war -T target/example-java-maven-1.0-SNAPSHOT.jar&quot;
 		    currentBuild.result = &apos;SUCCESS&apos;
 			}
 		catch (e)
@@ -75,7 +75,7 @@ node(&apos;master&apos;)
 		{
 		try {		
 			echo &quot;This is deployment&quot;
-			sh &quot;cd maven-sonar;curl -X PUT http://10.150.19.24:9059 -T target/example-java-maven-1.0-SNAPSHOT.jar&quot;
+			sh &quot;cd maven-sonar;curl -X PUT http://172.16.3.2:9059 -T target/example-java-maven-1.0-SNAPSHOT.jar&quot;
 			currentBuild.result = &apos;SUCCESS&apos;
 			}
 		catch (e)
