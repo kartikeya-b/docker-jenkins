@@ -8,7 +8,7 @@ ADD credentials.xml /var/jenkins_home
 RUN mkdir /var/jenkins_home/nodes/
 RUN cd /var/jenkins_home/nodes
 RUN mkdir Vagrant-Box
-cd Vagrant-Box
+RUN cd Vagrant-Box
 ADD node.xml .
 
 
