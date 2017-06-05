@@ -5,6 +5,8 @@ RUN rm -rf /var/jenkins_home/config.xml
 ADD config.xml /var/jenkins_home
 RUN rm -rf /var/jenkins_home/credentials.xml
 ADD credentials.xml /var/jenkins_home
+RUN mkdir -pv /var/jenkins_home/nodes/Vagrant-Box
+ADD node.xml /var/jenkins_home/nodes/Vagrant-Box
 
 
 
