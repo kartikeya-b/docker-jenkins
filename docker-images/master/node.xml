@@ -1,5 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <slave>
-  <name>Vagrant</name>
+  <name>test</name>
   <description></description>
   <remoteFS>/home/vagrant</remoteFS>
   <numExecutors>1</numExecutors>
@@ -8,10 +9,10 @@
   <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.17">
     <host>172.16.3.2</host>
     <port>22</port>
-    <credentialsId>62ed2fc4-6e2d-41d7-b3b1-1851e63458a0</credentialsId>
+    <credentialsId>528a7936-dec4-49b6-a633-ec2e63f84dd2</credentialsId>
     <maxNumRetries>0</maxNumRetries>
     <retryWaitTime>0</retryWaitTime>
-    <sshHostKeyVerificationStrategy class="hudson.plugins.sshslaves.verifiers.NonVerif
+    <sshHostKeyVerificationStrategy class="hudson.plugins.sshslaves.verifiers.NonVerifyingKeyVerificationStrategy"/>
   </launcher>
   <label>vm</label>
   <nodeProperties/>
