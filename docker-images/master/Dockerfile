@@ -16,8 +16,8 @@ ENV JENKINS_USER admin
 ENV JENKINS_PASS admin
 
 # Skip initial setup
-#ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
-ENV JAVA_OPTS ="-Djenkins.install.runSetupWizard=false -Djava.awt.headless=true -Dmail.smtp.starttls.enable=true"
+ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
+
 
 COPY executors.groovy /usr/share/jenkins/ref/init.groovy.d/
 COPY default-user.groovy /usr/share/jenkins/ref/init.groovy.d/
