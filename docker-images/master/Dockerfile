@@ -7,7 +7,7 @@ RUN rm -rf /var/jenkins_home/credentials.xml
 ADD credentials.xml /var/jenkins_home
 USER root
 RUN bash -c 'mkdir -p /var/jenkins_home/nodes /var/jenkins_home/nodes/Vagrant'
-ADD node.xml /var/jenkins_home/nodes/Vagrant/node.xml 
+ADD node.xml /var/jenkins_home/nodes/Vagrant/config.xml 
 USER jenkins
 
 
