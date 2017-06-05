@@ -1,5 +1,5 @@
 <slave>
-  <name>Vagrant-Box</name>
+  <name>Vagrant</name>
   <description></description>
   <remoteFS>/home/vagrant</remoteFS>
   <numExecutors>1</numExecutors>
