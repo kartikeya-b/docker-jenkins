@@ -25,11 +25,11 @@
     }
     stage(&apos;SonarQube Analysis&apos;)
     {
-       sh &apos;sudo docker exec -i mv /bin/sh -c \&apos;cd maven-sonar;mvn sonar:sonar -Dsonar.projectKey=org.sonarqube:java-simple-sq-scanner -Dsonar.projectName=Java -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectVersion=1.0 -Dsonar.language=java -Dsonar.host.url=http://172.16.3.3:9056\&apos;&apos;
+       sh &apos;sudo docker exec -i mv /bin/sh -c \&apos;cd maven-sonar;mvn sonar:sonar -Dsonar.projectKey=org.sonarqube:java-simple-sq-scanner -Dsonar.projectName=Java -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectVersion=1.0 -Dsonar.language=java -Dsonar.host.url=http://172.16.3.2:9056\&apos;&apos;
     }
     stage(&apos;War Upload To Nexus&apos;)
     {
-        sh &apos;sudo docker exec -i mv /bin/sh -c \&apos;cd maven-sonar;curl -u admin:admin123 -X PUT http://172.16.3.39053/nexus/content/repositories/releases/maven-sonar.war -T target/example-java-maven-1.0-SNAPSHOT.jar\&apos;&apos;
+        sh &apos;sudo docker exec -i mv /bin/sh -c \&apos;cd maven-sonar;curl -u admin:admin123 -X PUT http://172.16.3.2:9053/nexus/content/repositories/releases/maven-sonar.war -T target/example-java-maven-1.0-SNAPSHOT.jar\&apos;&apos;
     }
     stage(&apos;Deploy approval&apos;)
     {
